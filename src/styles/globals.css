@@ -2,26 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    #__next {  /* this is required to be the root component by nextJS for some reason. */
+        @apply h-full;
+    }
+    html,
+    body {
+        @apply h-full;
+    }
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+}
+
+
+/* css for swiping posts*/
+
+.infinite-cards {
+    height: 200px;
+    width: 100%;
+    display: grid;
+    place-items: center center;
+}
+
+.card {
+    height: 150px;
+    width: 150px;
+    border-radius: 15px;
+    color: #fff;
+    display: grid;
+    place-items: center center;
+    padding: 10px;
+}
+
+.infinite-cards p {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
 }
