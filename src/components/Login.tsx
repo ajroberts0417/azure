@@ -5,8 +5,6 @@ import { useState } from "react";
 import { AtpAgent, RichText } from "@atproto/api";
 import { getAgent } from "@/services/atp";
 
-const agent = getAgent()
-
 export default function Example() {
 
     const [identifier, setIdentifier] = useState("");
@@ -15,8 +13,13 @@ export default function Example() {
     // function called handleSubmit that handles a form submission, fully typed
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // const loginResult = new AtpAgent()
-        // alert(loginResult)
+
+
+        // this doesn't work.
+        // let atp = await getAgent();
+
+        // this doesn't work
+        let atp = new AtpAgent({service: "https://bsky.social",});
     }
     
     

@@ -23,13 +23,15 @@ const storageKeys = {
 
 const isOnServer = typeof window === "undefined"
 
-//the AtpAgent cannot be created on the server, so we need to check if we are on the server or not
+// ATPAgent keeps crashing due to broken schema definition, apparently.
+// I'm not sure if it's a bug in ATPAgent or if it just doesn't work on the server.
+// so we're only going to initialize it on the client, not the server.
 let atp: AtpAgent | null = null
 
 export function getAgent()  {
   if(atp || !isOnServer) return atp
   atp = new AtpAgent({
-    service: "",
+    service: "https://bsky.social",
     persistSession: (e, session) => {
       switch (e) {
         case "create":
