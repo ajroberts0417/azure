@@ -1,0 +1,1 @@
+export const forestBackgroundClass = "bg-[url('/bg.png')] bg-cover bg-center";

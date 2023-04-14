@@ -10,6 +10,10 @@
     body {
         @apply h-full;
     }
+
+    .bg-forest {
+        @apply bg-[url('/bg.png')] bg-cover bg-center;
+    }
 }
 
 :root {

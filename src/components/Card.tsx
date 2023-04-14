@@ -35,9 +35,16 @@ const randomColor = (current: CardColor) => {
 }
 
 
-export const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, animate }: CardProps) => (    
+export const Card = ({
+  card,
+  style,
+  onDirectionLock,
+  onDragStart,
+  onDragEnd,
+  animate,
+}: CardProps) => (
   <motion.div
-    className="bg-white w-64 h-64 rounded-xl shadow-xl flex items-center justify-center text-2xl font-bold cursor-pointer"
+    className="absolute h-64 w-64 bg-white p-4 my-4 rounded-xl shadow-xl flex items-center justify-center text-sm font-bold cursor-pointer break-words"
     drag
     dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
     dragDirectionLock
@@ -45,12 +52,12 @@ export const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, ani
     onDragEnd={onDragEnd}
     animate={animate}
     style={{ ...style }}
-    transition={{ ease: [.6, .05, -.01, .9] }}
-    whileTap={{ scale: .85 }}
+    transition={{ ease: [0.6, 0.05, -0.01, 0.9] }}
+    whileTap={{ scale: 0.85 }}
   >
     <p>{card.text}</p>
   </motion.div>
-)
+);
 export const InfiniteCards = () => {
   const [cards, setCards] = useState([
     { text: 'Up or down', background: colors[0] }, 
