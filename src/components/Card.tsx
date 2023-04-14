@@ -44,7 +44,7 @@ export const Card = ({
   animate,
 }: CardProps) => (
   <motion.div
-    className="absolute h-64 w-64 bg-white p-4 my-4 rounded-xl shadow-xl flex items-center justify-center text-sm font-bold cursor-pointer break-words"
+    className="bg-white p-4 my-4 rounded-xl shadow-xl flex items-center justify-center text-sm font-bold cursor-pointer break-words"
     drag
     dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
     dragDirectionLock
