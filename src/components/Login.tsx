@@ -16,10 +16,8 @@ export default function Example() {
 
 
         // this doesn't work.
-        // let atp = await getAgent();
+        let atp = await getAgent();
 
-        // this doesn't work
-        let atp = new AtpAgent({service: "https://bsky.social",});
     }
     
     
