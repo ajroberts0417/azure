@@ -24,6 +24,7 @@ const Feed: React.FC = () =>{
         }).then(resp => setPoasts(resp.data.feed))
       }, [])
 
+      
         
       return (
         <div className="flex min-h-full flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-forest">
