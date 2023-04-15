@@ -10,44 +10,4 @@
     body {
         @apply h-full;
     }
-
-    .bg-forest {
-        @apply bg-[url('/bg.png')] bg-cover bg-center;
-    }
-}
-
-:root {
-    
-}
-
-@media (prefers-color-scheme: dark) {
-}
-
-body {
-}
-
-
-/* css for swiping posts*/
-
-.infinite-cards {
-    height: 200px;
-    width: 100%;
-    display: grid;
-    place-items: center center;
-}
-
-.card {
-    height: 150px;
-    width: 150px;
-    border-radius: 15px;
-    color: #fff;
-    display: grid;
-    place-items: center center;
-    padding: 10px;
-}
-
-.infinite-cards p {
-    text-align: center;
-    font-size: 28px;
-    font-weight: 700;
 }
