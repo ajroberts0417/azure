@@ -4,8 +4,8 @@ import { StateUpdates } from '../state'
 type Id = string
 
 export interface UIState {
-  cardStacks: Record<Id, CardStackState>;
-  cards: Record<Id, CardState>;
+  cardStacks: Record<Id, CardStackState | undefined>;
+  cards: Record<Id, CardState | undefined>;
 }
 
 export const initialUIState: UIState = {
@@ -45,20 +45,24 @@ export const stateUpdates: StateUpdates<Payloads> = {
         const { stackId } = action.payload
         const stack = state.ui.cardStacks[stackId];
         const newCardIds = action.payload.cards.map((card) => card.id)
-        stack.cardIds.push(...newCardIds);
+        stack?.cardIds.push(...newCardIds);
     },
     
     pushCardsToStack: (state, action: PayloadAction<PushCardsPayload>) => {
         const { stackId } = action.payload
-        const stack = state.ui.cardStacks[stackId];    
-        const newCardIds = action.payload.cards.map((card) => card.id)
-        stack.cardIds = [...newCardIds, ...stack.cardIds];
+        const stack = state.ui.cardStacks[stackId];  
+        if(stack) {
+            const newCardIds = action.payload.cards.map((card) => card.id)
+            stack.cardIds = [...newCardIds, ...stack.cardIds];
+        } 
     },
     
     popCardsFromStack: (state, action: PayloadAction<PopCardsPayload>) => {
         const { stackId, numCardsToPop } = action.payload
         const stack = state.ui.cardStacks[stackId];
-        stack.cardIds = stack.cardIds.slice(numCardsToPop, stack.cardIds.length)
+        if(stack) {
+            stack.cardIds = stack.cardIds.slice(numCardsToPop, stack.cardIds.length)
+        }
     }
 };
 
