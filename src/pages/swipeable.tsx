@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { bsky } from "@/services/atp";
+import { AppBskyFeedGetTimeline } from "@atproto/api";
 
 const initialCards = [
   { id: 1, title: "Card 1" },
@@ -19,8 +20,14 @@ export const SwipeableCards = () => {
       .getTimeline({
         limit: 30,
       })
-      .then((resp) => setCards(resp.data.feed.map(p => ({ id: p.post.cid, text: p.post.record['text'] }))));
+      .then(processBskyTimelineResponse)
   }, [setCards]);
+
+  function processBskyTimelineResponse(resp: AppBskyFeedGetTimeline.Response) {
+    console.log(resp.data.feed);
+    const cardData = resp.data.feed.map(p => ({ id: p.post.cid, text: p.post.record['text'] }));
+    setCards(cardData);
+  }
 
   const handleSwipe = (id, _, info) => {
     const swipeX = swipePower(info.offset.x, info.velocity.x);
@@ -69,7 +76,7 @@ export const SwipeableCards = () => {
             style={{
               overflowY: 'scroll',
               height: '400px',
-              width: '300px',
+              width: '600px',
               borderRadius: "10px",
               backgroundColor: "#ffffff",
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",

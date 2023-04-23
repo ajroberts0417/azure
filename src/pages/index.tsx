@@ -1,6 +1,11 @@
+import { CommandPalette } from "@/components/CommandPalette"
+
 
 export default function Home() {
   return (
-    <>you are on the index page, your app is not broken.</>
+    <>
+      Try opening the command palette w/ cmd+k
+      <CommandPalette />
+    </>
   )
 }

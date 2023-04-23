@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
       getAccount().then((account) => {
-        if (!account) return push("/");
+        if (!account) return push("/login");
       }).finally(() => {
         setLoading(false)
       })
