@@ -1,5 +1,4 @@
-import { Background } from "@/components/Background";
-import { BackgroundImage, useSetBackgroundImage } from "@/state/slices/theme";
+import Background, { BackgroundImage, useSetBackgroundImage } from "@/big-brain/components/Background";
 
 export default function BackgroundDemo() {
     const setBackgroundImage = useSetBackgroundImage()

@@ -6,23 +6,23 @@ import { useEffect, useState } from 'react'
 
 import { Provider } from "react-redux";
 
-import store from "@/state/store";
+import { store } from "@/big-brain/framework";
 
 export default function App({ Component, pageProps }: AppProps) {
 
   const { push } = useRouter()
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-      getAccount().then((account) => {
-        if (!account) return push("/");
-      }).finally(() => {
-        setLoading(false)
-      })
-  }, [push, setLoading])
+  // useEffect(() => {
+  //     getAccount().then((account) => {
+  //       if (!account) return push("/");
+  //     }).finally(() => {
+  //       setLoading(false)
+  //     })
+  // }, [push, setLoading])
 
-  console.log(loading)
+  // console.log(loading)
 
   return loading ? (
     <></>

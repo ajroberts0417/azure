@@ -1,14 +1,12 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import { StateUpdates } from '../state'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { Id, StateUpdates } from '../framework';
 
-type Id = string
-
-export interface UIState {
+interface State {
   cardStacks: Record<Id, CardStackState | undefined>;
   cards: Record<Id, CardState | undefined>;
 }
 
-export const initialUIState: UIState = {
+const initialState: State = {
   cardStacks: {},
   cards: {},
 };
@@ -39,35 +37,46 @@ interface PushCardsPayload {
 
 type Payloads = AppendCardsPayload & PopCardsPayload & PushCardsPayload;
 
-export const stateUpdates: StateUpdates<Payloads> = {
+const stateUpdates: StateUpdates<Payloads, State> = {
+  appendCardsToStack: (state, action: PayloadAction<AppendCardsPayload>) => {
+    const { stackId } = action.payload;
+    const stack = state.cardStacks[stackId];
+    const newCardIds = action.payload.cards.map((card) => card.id);
+    stack?.cardIds.push(...newCardIds);
+  },
 
-    appendCardsToStack: (state, action: PayloadAction<AppendCardsPayload>) => {
-        const { stackId } = action.payload
-        const stack = state.ui.cardStacks[stackId];
-        const newCardIds = action.payload.cards.map((card) => card.id)
-        stack?.cardIds.push(...newCardIds);
-    },
-    
-    pushCardsToStack: (state, action: PayloadAction<PushCardsPayload>) => {
-        const { stackId } = action.payload
-        const stack = state.ui.cardStacks[stackId];  
-        if(stack) {
-            const newCardIds = action.payload.cards.map((card) => card.id)
-            stack.cardIds = [...newCardIds, ...stack.cardIds];
-        } 
-    },
-    
-    popCardsFromStack: (state, action: PayloadAction<PopCardsPayload>) => {
-        const { stackId, numCardsToPop } = action.payload
-        const stack = state.ui.cardStacks[stackId];
-        if(stack) {
-            stack.cardIds = stack.cardIds.slice(numCardsToPop, stack.cardIds.length)
-        }
+  pushCardsToStack: (state, action: PayloadAction<PushCardsPayload>) => {
+    const { stackId } = action.payload;
+    const stack = state.cardStacks[stackId];
+    if (stack) {
+      const newCardIds = action.payload.cards.map((card) => card.id);
+      stack.cardIds = [...newCardIds, ...stack.cardIds];
     }
+  },
+
+  popCardsFromStack: (state, action: PayloadAction<PopCardsPayload>) => {
+    const { stackId, numCardsToPop } = action.payload;
+    const stack = state.cardStacks[stackId];
+    if (stack) {
+      stack.cardIds = stack.cardIds.slice(numCardsToPop, stack.cardIds.length);
+    }
+  },
 };
 
-const Card: React.FC = () => {
+const CardComp: React.FC = () => {
     return (
         <div>text</div>
     )
+}
+
+const slice = createSlice({
+  name: "card",
+  initialState,
+  reducers: {
+    ...stateUpdates,
+  },
+});
+
+export const Card = {
+    reducer: slice.reducer,
 }
