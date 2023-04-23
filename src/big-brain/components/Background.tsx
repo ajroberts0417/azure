@@ -7,7 +7,7 @@ export enum BackgroundImage {
   Space = "/images/background/space.jpg",
 }
 
-export interface State {
+interface State {
   backgrounds: Record<Id, BackgroundState | undefined>;
 }
 
@@ -29,27 +29,28 @@ export function useBackground(id?: string): BackgroundState | undefined {
   );
 }
 
-// useGetThing(id, state => state.ui.backgroundState.backgrounds)
-
-export function useSetBackgroundImage(): (
-  image: BackgroundImage,
+export function useUpsertBackground(): (
+  background: Partial<BackgroundState>,
   id?: string,
 ) => void {
   const dispatch = useAppDispatch();
-  return (image, backgroundId) =>
-    dispatch(setBackgroundImage({ image, backgroundId }));
+  return (background, backgroundId) =>
+    dispatch(upsertBackground({ background, backgroundId }));
 }
 
-interface SetBackgroundImagePayload {
+interface UpsertBackgroundPayload {
   backgroundId?: Id;
-  image: BackgroundImage;
+  background: Partial<BackgroundState>;
 }
 
-const stateUpdates: StateUpdates<SetBackgroundImagePayload, State> = {
-  setBackgroundImage: (state, action: PayloadAction<SetBackgroundImagePayload>) => {
+const stateUpdates: StateUpdates<UpsertBackgroundPayload, State> = {
+  upsertBackground: (state, action: PayloadAction<UpsertBackgroundPayload>) => {
     const background = state.backgrounds[idOrDefault(action.payload.backgroundId)];
     if(background) {
-      background.image = action.payload.image;
+      Object.entries(action.payload.background).forEach(([key, value]) => {
+        const typedKey = key as keyof BackgroundState;
+        background[typedKey] = value as BackgroundState[typeof typedKey];
+      })
     }
   },
 };
@@ -62,7 +63,7 @@ const slice = createSlice({
   },
 });
 
-export const { setBackgroundImage } = slice.actions;
+export const { upsertBackground } = slice.actions;
 
 const Background: React.FC<{
   children: React.ReactNode;
@@ -75,10 +76,6 @@ const Background: React.FC<{
     {children}
   </div>
 );
-
-const Background.set = () => {
-
-}
 
 export const _Background = {
   reducer: slice.reducer

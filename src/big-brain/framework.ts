@@ -17,7 +17,8 @@ export type Id = string;
 const ui = combineReducers({
   //all ui components in our framework share state under an id 'default' unless specified otherwise
   cardState: components.Card.reducer,
-  backgroundState: components._Background.reducer
+  backgroundState: components._Background.reducer,
+  timelineState: components._Timeline.reducer,
 })
 
 function makeStore() {
